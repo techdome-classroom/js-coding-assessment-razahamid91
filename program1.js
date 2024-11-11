@@ -14,7 +14,7 @@ const getTotalIsles = function (grid) {
       return;
     }
     
-    // Mark the current land as visited
+    
     grid[row][col] = 'W';
     
     // Explore all 4 directions (up, down, left, right)
