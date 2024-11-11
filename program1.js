@@ -1,26 +1,35 @@
 const getTotalIsles = function (grid) {
 
+
   if (!grid || grid.length === 0) return 0;
-
+  
+  let rows = grid.length;
+  let cols = grid[0].length;
   let islandCount = 0;
-  const rowCount = grid.length;
-  const colCount = grid[0].length;
 
-  const exploreIsland = (x, y) => {
-    if (x < 0 || y < 0 || x >= rowCount || y >= colCount || grid[x][y] === 'W') return;
+  // Helper function for DFS
+  function dfs(row, col) {
+    // Check if out of bounds or at water
+    if (row < 0 || row >= rows || col < 0 || col >= cols || grid[row][col] === 'W') {
+      return;
+    }
+    
+    // Mark the current land as visited
+    grid[row][col] = 'W';
+    
+    // Explore all 4 directions (up, down, left, right)
+    dfs(row + 1, col);  // Down
+    dfs(row - 1, col);  // Up
+    dfs(row, col + 1);  // Right
+    dfs(row, col - 1);  // Left
+  }
 
-    grid[x][y] = 'W';
-    exploreIsland(x + 1, y);
-    exploreIsland(x - 1, y);
-    exploreIsland(x, y + 1);
-    exploreIsland(x, y - 1);
-  };
-
-  for (let x = 0; x < rowCount; x++) {
-    for (let y = 0; y < colCount; y++) {
-      if (grid[x][y] === 'L') {
-        islandCount++;
-        exploreIsland(x, y);
+  // Iterate through each cell in the grid
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (grid[i][j] === 'L') {
+        islandCount++;  // Found a new island
+        dfs(i, j);      // Mark all connected lands as visited
       }
     }
   }
