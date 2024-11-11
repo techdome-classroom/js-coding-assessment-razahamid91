@@ -17,7 +17,7 @@ const getTotalIsles = function (grid) {
     
     grid[row][col] = 'W';
     
-    // Explore all 4 directions (up, down, left, right)
+   
     dfs(row + 1, col);  // Down
     dfs(row - 1, col);  // Up
     dfs(row, col + 1);  // Right
